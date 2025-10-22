@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bombus 人才管理系統 - 完整流程圖 (V4)</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft JhengHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .header .version {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 3px solid #667eea;
+            flex-wrap: wrap;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .nav-tab {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px 20px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .nav-tab:hover {
+            background: #f0f0f0;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .diagram-section {
+            display: none;
+        }
+
+        .diagram-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .section-description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+            line-height: 1.6;
+        }
+
+        .mermaid {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: visible;
+            min-height: 200px;
+        }
+
+        .subsection {
+            margin: 30px 0;
+            padding: 25px;
+            background: #fafafa;
+            border-radius: 10px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .subsection-title {
+            font-size: 1.4em;
+            color: #764ba2;
+            margin-bottom: 20px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 15px;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .module-card h4 {
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .nav-tab {
+                width: 100%;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏢 Bombus 人才管理系統</h1>
+            <div class="subtitle">完整系統流程圖</div>
+            <div class="version">版本 V4.0 | 更新日期：2025-10-22</div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('overview')">📊 系統總覽</button>
+            <button class="nav-tab" onclick="showSection('l0')">⚙️ L0 核心層</button>
+            <button class="nav-tab" onclick="showSection('l1')">👥 L1 員工管理</button>
+            <button class="nav-tab" onclick="showSection('l2')">🧩 L2 職能管理</button>
+            <button class="nav-tab" onclick="showSection('l3')">🎓 L3 教育訓練</button>
+            <button class="nav-tab" onclick="showSection('l4')">📈 L4 績效管理</button>
+            <button class="nav-tab" onclick="showSection('l5')">🗂 L5 專案管理</button>
+            <button class="nav-tab" onclick="showSection('l6')">💎 L6 價值引擎</button>
+        </div>
+
+        <div class="content">
+            <!-- 系統總覽 -->
+            <div id="overview" class="diagram-section active">
+                <h2 class="section-title">📊 系統總覽</h2>
+                <div class="section-description">
+                    <strong>Bombus 人才管理系統</strong>是一個完整的人力資源管理平台，涵蓋從招募到價值呈現的全生命週期管理。系統分為 7 大模組（L0-L6），各模組間緊密整合，形成完整的資料流與決策支援體系。
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">系統架構與模組關聯圖</h3>
+                    <div class="mermaid">
+graph TB
+    L0[L0 系統核心與儀表層<br/>企業管理儀表板<br/>系統管理與權限控制]
+
+    L1[L1 員工管理模組<br/>招募與候選人管理<br/>員工檔案與歷程管理<br/>人才庫與再接觸管理<br/>職涯晉升與接班規劃]
+
+    L2[L2 職能管理模組<br/>職能架構管理<br/>職務說明書管理<br/>職能評估系統<br/>職能落差分析<br/>AI職能生成引擎]
+
+    L3[L3 教育訓練管理模組<br/>培訓計畫管理<br/>課程與報名管理<br/>線上測驗系統<br/>培訓成效追蹤]
+
+    L4[L4 績效管理模組<br/>過程管理系統<br/>考核週期管理<br/>360度回饋系統<br/>績效分析與改善計畫]
+
+    L5[L5 專案管理模組<br/>專案與任務管理<br/>專案協作與進度追蹤<br/>專案績效與OKR連結<br/>專案自動化引擎]
+
+    L6[L6 價值引擎模組<br/>獎項資料庫管理<br/>AI申請助理<br/>智慧文件分析<br/>影響力評估引擎]
+
+    L0 -->|權限控制<br/>資料整合| L1
+    L0 -->|權限控制<br/>資料整合| L2
+    L0 -->|權限控制<br/>資料整合| L3
+    L0 -->|權限控制<br/>資料整合| L4
+    L0 -->|權限控制<br/>資料整合| L5
+    L0 -->|權限控制<br/>資料整合| L6
+
+    L1 -->|員工職能資料| L2
+    L2 -->|職能落差分析| L3
+    L3 -->|培訓成效資料| L4
+    L3 -->|培訓資料| L6
+    L4 -->|績效資料| L5
+    L5 -->|專案績效資料| L4
+    L5 -->|專案成果資料| L6
+    L6 -->|影響力評估結果| L0
+
+    style L0 fill:#e3f2fd
+    style L1 fill:#fff3e0
+    style L2 fill:#f3e5f5
+    style L3 fill:#c8e6c9
+    style L4 fill:#ffe0b2
+    style L5 fill:#d1c4e9
+    style L6 fill:#ffccbc
+                    </div>
+                    <ul class="feature-list">
+                        <li><strong>L0 → L1-L6：</strong>提供統一的權限控制與資料整合平台</li>
+                        <li><strong>L1 → L2：</strong>員工職能資料作為職能評估的基礎</li>
+                        <li><strong>L2 → L3：</strong>職能落差分析結果驅動培訓計畫制定</li>
+                        <li><strong>L3 → L4：</strong>培訓成效資料自動更新員工職能與績效評估</li>
+                        <li><strong>L3 → L6：</strong>培訓資料供應價值引擎進行成果分析與影響力評估</li>
+                        <li><strong>L4 ↔ L5：</strong>雙向整合 - 績效資料輸入專案管理作為任務評估依據，專案績效資料回饋至績效管理系統</li>
+                        <li><strong>L5 → L6：</strong>專案成果與資料供應價值引擎進行影響力評估</li>
+                        <li><strong>L6 → L0：</strong>影響力評估結果回饋至企業管理儀表板供決策參考</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- L0 - 核心儀表層 -->
+            <div id="l0" class="diagram-section">
+                <h2 class="section-title">⚙️ L0 - 系統核心與儀表層</h2>
+                <div class="section-description">
+                    <strong>模組摘要：</strong>L0提供全模組的整合儀表板、權限機制與統一架構入口，協助組織角色化視圖與核心資料整合與管控。
+                </div>
+
+                <div class="module-card">
+                    <h4>0.0 企業管理儀表板</h4>
+                    <ul class="feature-list">
+                        <li>提供角色導向視圖（高階主管、HR、部門主管、員工）</li>
+                        <li>整合即時資料流（員工/專案/績效模組）</li>
+                        <li>生成AI KPI摘要（自動一句話狀態總結）</li>
+                        <li>顯示模組間API對應圖</li>
+                        <li>根據角色權限顯示不同維度KPI</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>0.1 系統管理與權限控制</h4>
+                    <p><strong>權限模型與組織架構整合</strong></p>
+                    <ul class="feature-list">
+                        <li>建立多層角色權限架構（模組/功能/資料列）</li>
+                        <li>同步組織圖與部門結構</li>
+                        <li>提供權限範圍可視化設定介面</li>
+                    </ul>
+                    <p><strong>授權與稽核機制</strong></p>
+                    <ul class="feature-list">
+                        <li>實作API Middleware權限驗證</li>
+                        <li>建立權限快取與Token刷新策略</li>
+                        <li>生成稽核報告與異常追蹤</li>
+                        <li>查詢操作日誌與角色歷程</li>
+                    </ul>
+                    <p><strong>系統整合與監控</strong></p>
+                    <ul class="feature-list">
+                        <li>建立跨模組共用認證中心（教育/績效/專案/價值引擎）</li>
+                        <li>提供中央狀態監控板（System Health Board）</li>
+                        <li>整合Google/104/Anthropic API記錄層</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- L1 - 員工管理 -->
+            <div id="l1" class="diagram-section">
+                <h2 class="section-title">👥 L1 - 員工管理模組</h2>
+                <div class="section-description">
+                    <strong>模組摘要：</strong>L1管理從招募、到職、在職紀錄、接觸再行銷到晉升規劃的整體員工週期，支援AI驅動的人才評估與媒合。
+                </div>
+
+                <div class="module-card">
+                    <h4>1.1 招募與候選人管理</h4>
+                    <ul class="feature-list">
+                        <li>管理職缺（發布/範本/核准/狀態）</li>
+                        <li>整合候選人檔案與履歷解析</li>
+                        <li>整合104平台（自動匯入與同步）</li>
+                        <li>提供AI面試摘要與智能排序</li>
+                        <li>整合rite測驗與評分流程</li>
+                        <li>建立電子面試紀錄與主管回饋流程</li>
+                        <li>管理錄取與轉員工流程（自動建檔 > 安排導師）</li>
+                        <li>建立AI履歷推薦引擎與適配度評分模型</li>
+                        <li>自動生成履歷摘要與推薦候選清單</li>
+                        <li>執行職缺關鍵詞向量化分析</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>1.2 員工檔案與歷程管理</h4>
+                    <ul class="feature-list">
+                        <li>維護員工主資料與職務異動紀錄</li>
+                        <li>管理文件版本與到期提醒</li>
+                        <li>提供稽核與歷程回溯查詢</li>
+                        <li>建立快速搜尋與批次作業介面</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>1.3 人才庫與再接觸管理</h4>
+                    <ul class="feature-list">
+                        <li>建立候選人保留與標籤化分類機制</li>
+                        <li>建立智慧媒合引擎</li>
+                        <li>提供再接觸提醒與自動追蹤流程</li>
+                        <li>共用語意索引庫以支援履歷推薦</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>1.4 職涯晉升與接班規劃</h4>
+                    <ul class="feature-list">
+                        <li>職涯路徑（管理職/專業職）</li>
+                        <li>設定晉升標準與資格驗證規則</li>
+                        <li>建立晉升核准與生效流程</li>
+                        <li>建立接班人計畫並提供建議報告</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- L2 - 職能管理 -->
+            <div id="l2" class="diagram-section">
+                <h2 class="section-title">🧩 L2 - 職能管理模組</h2>
+                <div class="section-description">
+                    <strong>模組摘要：</strong>L2定義並追蹤組織各職位對應職能，包含JD撰寫、職能評估、落差分析與AI自動化職能建構。
+                </div>
+
+                <div class="module-card">
+                    <h4>2.1 職能架構管理</h4>
+                    <ul class="feature-list">
+                        <li>建立職等職級矩陣對應</li>
+                        <li>管理跨部門職能關聯</li>
+                        <li>提供職能樹狀階層瀏覽介面</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>2.2 職務說明書管理（JD）</h4>
+                    <ul class="feature-list">
+                        <li>設定職能基準辦法</li>
+                        <li>提供JD範本與自動產生模板</li>
+                        <li>管理職能關聯與版本控制</li>
+                        <li>提供AI撰寫助手功能</li>
+                        <li>對齊職能標準與產業對照參照表</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>2.3 職能框架開發</h4>
+                    <ul class="feature-list">
+                        <li>設計職能模型（核心/專業/管理）</li>
+                        <li>設計職務說明書（K/S/A）</li>
+                        <li>設計月度檢核表</li>
+                        <li>定義熟練度等級（初階/熟練/專家）</li>
+                        <li>提供CRUD職能資料操作介面</li>
+                        <li>提供批次角色對應工具</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>2.4 職能評估系統</h4>
+                    <ul class="feature-list">
+                        <li>提供自評與主管評估表</li>
+                        <li>整合360評估觀測工具</li>
+                        <li>設定評估排程、提醒與歷史記錄追蹤</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>2.5 職能落差分析</h4>
+                    <ul class="feature-list">
+                        <li>比對JD需求與員工職能差距</li>
+                        <li>評估落差嚴重度分數</li>
+                        <li>提供部門與組織層級分析</li>
+                        <li>與教育訓練模組整合應用</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>2.6 AI職能生成引擎</h4>
+                    <ul class="feature-list">
+                        <li>自動由JD或職敘產出職能模型</li>
+                        <li>擷取AI行為指標</li>
+                        <li>對齊ISO/行業標準職能對照表</li>
+                        <li>自動分類職能庫與技能群集</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- L3 - 教育訓練 -->
+            <div id="l3" class="diagram-section">
+                <h2 class="section-title">🎓 L3 - 教育訓練管理模組</h2>
+                <div class="section-description">
+                    <strong>模組摘要：</strong>L3管理組織內訓策略與執行，支援從年度培訓規劃、課程管理、測驗到成效回饋的完整教育循環。<br/>
+                    <strong>與績效管理系統的關聯：</strong>培訓成效資料與培訓記錄會同步更新至績效管理系統，作為員工績效評估的重要依據。
+                </div>
+
+                <div class="module-card">
+                    <h4>3.1 培訓計畫管理</h4>
+                    <ul class="feature-list">
+                        <li>建立年度或專案型培訓計畫</li>
+                        <li>自動根據職能落差產出訓練建議</li>
+                        <li>提供多層級核准鏈與版本控制</li>
+                        <li>顯示執行進度與預算控制儀表板</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>3.2 課程與報名管理</h4>
+                    <ul class="feature-list">
+                        <li>支援課程類型分類（OJT/Off-JT/SD）與功能分群（通識、專業）</li>
+                        <li>整合講師與教材平台，提供講師遴選標準</li>
+                        <li>管理課程報名、審核、排程與課前、課中、課後文件流程</li>
+                        <li>提供QR Code出席與簽到追蹤機制</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>3.3 線上測驗系統</h4>
+                    <ul class="feature-list">
+                        <li>提供多題型題庫（選擇/問答/填空）</li>
+                        <li>建立測驗範本並自動組卷</li>
+                        <li>管控作答行為並設防作弊機制</li>
+                        <li>提供自動評分與證書產出功能</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>3.4 培訓成效追蹤與回饋循環</h4>
+                    <ul class="feature-list">
+                        <li>比較前測與後測結果，支援季度與年度報表</li>
+                        <li>教室日誌、課程總結報告書</li>
+                        <li>自動更新員工職能狀態</li>
+                        <li>若成效不達標，自動生成新訓練提案</li>
+                        <li>顯示培訓儀表板與成效趨勢</li>
+                        <li><strong>整合績效管理：</strong>培訓完成記錄與成效數據自動同步至績效管理系統</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- L4 - 績效管理 -->
+            <div id="l4" class="diagram-section">
+                <h2 class="section-title">📈 L4 - 績效管理模組</h2>
+                <div class="section-description">
+                    <strong>模組摘要：</strong>L4管理目標設定、過程追蹤、回饋與考核週期，整合個人與組織績效數據，用於驅動改進與獎懲機制。<br/>
+                    <strong>模組關聯：</strong>接收來自教育訓練模組的培訓成效資料，並與專案管理模組雙向整合績效與專案資料。
+                </div>
+
+                <div class="module-card">
+                    <h4>4.1 過程管理系統</h4>
+                    <ul class="feature-list">
+                        <li>建立目標設定與對齊邏輯（OKR/SMART）</li>
+                        <li>追蹤任務與行為績效</li>
+                        <li>呈現任務進度視覺化介面</li>
+                        <li>整合評分與績效結算</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>4.2 考核週期管理</h4>
+                    <ul class="feature-list">
+                        <li>支援月度/季度/半年/年度考核模式</li>
+                        <li>建立自動化流程引擎與通知機制</li>
+                        <li>提供考核表單與量表自定義功能</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>4.3 360度回饋系統</h4>
+                    <ul class="feature-list">
+                        <li>收集來自上級/同儕/下屬/自評的回饋</li>
+                        <li>提供匿名化與隱私保護設定</li>
+                        <li>產出回饋摘要與視覺化報表</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>4.4 績效紀錄與日誌系統</h4>
+                    <ul class="feature-list">
+                        <li>建立分類日誌（成就/問題/觀察）</li>
+                        <li>提供即時紀錄介面</li>
+                        <li>整合考核資料與趨勢檢索功能</li>
+                        <li><strong>整合培訓資料：</strong>自動納入員工培訓完成記錄與成效</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>4.5 績效分析與改善計畫</h4>
+                    <ul class="feature-list">
+                        <li>顯示個人/團隊/組織績效儀表板</li>
+                        <li>產出報告並支援多格式匯出</li>
+                        <li>建立與追蹤PIP（績效改善計畫）</li>
+                        <li><strong>整合專案資料：</strong>接收專案管理模組的專案績效資料作為評估依據</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- L5 - 專案管理 -->
+            <div id="l5" class="diagram-section">
+                <h2 class="section-title">🗂 L5 - 專案管理模組</h2>
+                <div class="section-description">
+                    <strong>模組摘要：</strong>L5管理專案計畫、任務分解、協作追蹤與成果輸出，串聯績效資料並強化自動化與AI智能分析。<br/>
+                    <strong>與績效管理系統的關聯：</strong>專案任務完成度與專案績效資料會回饋至績效管理系統，同時接收績效資料作為任務評估依據。
+                </div>
+
+                <div class="module-card">
+                    <h4>5.1 專案與任務管理</h4>
+                    <ul class="feature-list">
+                        <li>專案管理使用文件</li>
+                        <li>WBS任務分解結構</li>
+                        <li>設定專案目標、範疇與驗收條件</li>
+                        <li>成本追蹤機制</li>
+                        <li>提供甘特圖/看板/清單檢視</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>5.2 專案協作與進度追蹤</h4>
+                    <ul class="feature-list">
+                        <li>提供成員協作介面（留言/任務狀態同步）</li>
+                        <li>設定自動提醒與阻礙回報流程</li>
+                        <li>建立週報/雙週報節點追蹤</li>
+                        <li><strong>整合績效系統：</strong>接收績效系統資料作為進度輸入來源</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>5.3 專案績效與OKR連結</h4>
+                    <ul class="feature-list">
+                        <li>將專案目標分解至任務層級</li>
+                        <li>建立任務與OKR自動對應邏輯</li>
+                        <li>提供KPI與貢獻度報表</li>
+                        <li>發送效能偏差自動提醒（Variance Alert）</li>
+                        <li><strong>回饋績效系統：</strong>專案KPI與貢獻度資料同步至績效管理系統</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>5.4 專案報表與分析</h4>
+                    <ul class="feature-list">
+                        <li>產出一頁式專案報告（目標/任務/進度/成本）</li>
+                        <li>顯示專案熱力圖（多專案績效對比）</li>
+                        <li>偵測成本偏差與建立預警模型</li>
+                        <li>自動產出專案成果摘要</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>5.5 專案自動化引擎</h4>
+                    <ul class="feature-list">
+                        <li>建立任務週期重複排程機制</li>
+                        <li>發送預警（延誤/預算/貢獻異常）</li>
+                        <li>整合Slack/Email通知管道</li>
+                        <li>自動歸檔專案知識與結案報告</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- L6 - 價值引擎 -->
+            <div id="l6" class="diagram-section">
+                <h2 class="section-title">💎 L6 - 價值引擎模組</h2>
+                <div class="section-description">
+                    <strong>模組摘要：</strong>L6聚焦於價值證明與報獎管理，整合文件資料、自動化產出與影響力評估，協助組織呈現成果與建構申請能力。
+                </div>
+
+                <div class="module-card">
+                    <h4>6.1 獎項資料庫管理</h4>
+                    <ul class="feature-list">
+                        <li>建立獎項目錄與時程追蹤</li>
+                        <li>提供智慧篩選與推薦功能</li>
+                        <li>顯示年度更新與截止提醒</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>6.2 文件儲存庫</h4>
+                    <ul class="feature-list">
+                        <li>管理文件分類、標籤與版本控制</li>
+                        <li>支援多格式批次上傳</li>
+                        <li>追蹤文件到期並發送提醒通知</li>
+                        <li>整合版本歷史與AI文件彙整</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>6.3 AI申請助理</h4>
+                    <ul class="feature-list">
+                        <li>自動產生申請檢核表</li>
+                        <li>萃取多模組資料並自動填入申請格式</li>
+                        <li>建立AI文案產生器（亮點/成果/摘要）</li>
+                        <li>提供簡報輸出（PPT/PDF/Keynote）</li>
+                        <li>顯示申請進度與歷史紀錄追蹤</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>6.4 智慧文件分析</h4>
+                    <ul class="feature-list">
+                        <li>偵測文件缺漏並執行品質評估</li>
+                        <li>發送自動警示與責任人通知</li>
+                        <li>顯示合規風險儀表板與建議行動</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h4>6.5 影響力評估引擎</h4>
+                    <ul class="feature-list">
+                        <li>整合績效/專案/培訓資料進行成效分析</li>
+                        <li>自動產出報獎潛力模型</li>
+                        <li>提供推薦建議與成果摘要</li>
+                        <li>產出亮點摘要文件供外部提報使用</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 Bombus Talent Management System | 完整系統流程圖 V4.0</p>
+            <p>此文件根據系統規格書V4.md自動生成 | 保留所有細節與功能描述</p>
+        </div>
+    </div>
+
+    <script>
+        // 初始化 Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#764ba2',
+                secondaryColor: '#c8e6c9',
+                tertiaryColor: '#fff3e0'
+            }
+        });
+
+        // 切換區塊顯示
+        function showSection(sectionId) {
+            // 隱藏所有區塊
+            const sections = document.querySelectorAll('.diagram-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // 移除所有 tab 的 active 狀態
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // 顯示目標區塊
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // 設定當前 tab 為 active
+            event.target.classList.add('active');
+
+            // 滾動到頂部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 頁面載入完成後確保 Mermaid 正確渲染
+        window.addEventListener('load', function() {
+            console.log('Page loaded, Mermaid diagrams rendered');
+        });
+    </script>
+</body>
+</html>
